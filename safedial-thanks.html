@@ -7,10 +7,18 @@
   <title>You're in - SafeDial</title>
   <meta name="robots" content="noindex">
 
-  <!-- GA4: paste the same Google tag as index.html here.
-     This URL (/thanks) is your deposit-conversion trigger in GA4 / Google Ads. -->
-  <!-- GA4 TAG GOES HERE -->
-
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BRQEQGNZVB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-BRQEQGNZVB');
+  </script>
+  <script>
+    gtag('event', 'deposit_complete', { currency: 'CAD', value: 25 });
+  </script>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
