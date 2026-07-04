@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SafeDial — Scam-call protection for your parent, managed by you</title>
+<meta name="description" content="SafeDial screens every call to your parent's phone, stays on the line, and ends a scam call the moment it shows itself — then sends you the full story. Built in BC. $35/month.">
+<meta property="og:title" content="SafeDial — The call already happened. The next one goes differently.">
+<meta property="og:description" content="Call protection for an elderly parent, managed remotely by family. SafeDial ends scam calls during the call and tells you everything.">
+<meta property="og:url" content="https://safedial.care/">
+<meta property="og:type" content="website">
+
+<!-- ============================================================
+     PLACEHOLDER 1 of 3 — GA4 (optional but recommended for the ads test)
+     Paste your Google tag here. Get it from analytics.google.com →
+     Admin → Data streams. Also add a conversion event on the Stripe
+     success page later.
+============================================================ -->
+<!-- GA4 TAG GOES HERE -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --paper:#FBF7EE;
+    --paper-deep:#F2EBDB;
+    --pine:#1F4A38;
+    --pine-deep:#122E23;
+    --marigold:#E9A83B;
+    --marigold-deep:#B67F14;
+    --ink:#26302B;
+    --ink-soft:#57615B;
+    --line:#E3D9C4;
+    --card:#FFFFFF;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    .rise{animation:none !important;opacity:1 !important;transform:none !important}
+  }
+  body{
+    font-family:'Atkinson Hyperlegible', Georgia, serif;
+    color:var(--ink);
+    background:var(--paper);
+    font-size:1.125rem;
+    line-height:1.65;
+  }
+  h1,h2,h3,.btn,.eyebrow,.step-num{font-family:'Lexend', sans-serif}
+  a{color:var(--pine)}
+  a:focus-visible,button:focus-visible,.btn:focus-visible{
+    outline:3px solid var(--marigold);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+  .wrap{max-width:44rem;margin:0 auto;padding:0 1.25rem}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:var(--pine-deep);
+    color:var(--paper);
+    padding:4.5rem 0 5rem;
+  }
+  .eyebrow{
+    display:inline-block;
+    font-size:.8rem;
+    font-weight:600;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--marigold);
+    margin-bottom:1.5rem;
+  }
+  .hero h1{
+    font-size:clamp(2.1rem, 6vw, 3.1rem);
+    font-weight:700;
+    line-height:1.12;
+    letter-spacing:-0.015em;
+    margin-bottom:1.25rem;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--marigold);
+  }
+  .hero p.lede{
+    font-size:1.2rem;
+    line-height:1.6;
+    color:#E9E2CF;
+    max-width:36rem;
+    margin-bottom:2.25rem;
+  }
+  .rise{
+    opacity:0;
+    transform:translateY(14px);
+    animation:rise .7s ease forwards;
+  }
+  .rise.d1{animation-delay:.08s}
+  .rise.d2{animation-delay:.16s}
+  .rise.d3{animation-delay:.24s}
+  @keyframes rise{to{opacity:1;transform:translateY(0)}}
+
+  .btn{
+    display:inline-block;
+    background:var(--marigold);
+    color:var(--pine-deep);
+    font-weight:600;
+    font-size:1.05rem;
+    text-decoration:none;
+    padding:.95rem 1.6rem;
+    border-radius:10px;
+    border:2px solid var(--marigold);
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .btn:hover{background:#F0B85A;border-color:#F0B85A}
+  .btn.secondary{
+    background:transparent;
+    color:var(--paper);
+    border-color:#3D6653;
+    margin-left:.6rem;
+  }
+  .btn.secondary:hover{border-color:var(--marigold);background:transparent}
+  .cta-note{
+    font-size:.92rem;
+    color:#BBC9BE;
+    margin-top:.9rem;
+  }
+  @media (max-width:560px){
+    .btn{display:block;text-align:center;margin-bottom:.7rem}
+    .btn.secondary{margin-left:0}
+  }
+
+  /* ---------- Sections ---------- */
+  section{padding:3.75rem 0}
+  section.alt{background:var(--paper-deep)}
+  h2{
+    font-size:clamp(1.5rem, 4vw, 1.9rem);
+    font-weight:700;
+    color:var(--pine-deep);
+    line-height:1.25;
+    margin-bottom:1.1rem;
+  }
+  section p{margin-bottom:1rem}
+  section p:last-child{margin-bottom:0}
+  .soft{color:var(--ink-soft)}
+
+  /* ---------- Example alert card (signature) ---------- */
+  .alert-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-left:5px solid var(--pine);
+    border-radius:12px;
+    padding:1.4rem 1.5rem;
+    margin:1.8rem 0 .6rem;
+    box-shadow:0 2px 14px rgba(18,46,35,.07);
+  }
+  .alert-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    font-family:'Lexend',sans-serif;
+    font-size:.85rem;
+    font-weight:600;
+    color:var(--pine);
+    margin-bottom:.7rem;
+  }
+  .alert-head time{color:var(--ink-soft);font-weight:400}
+  .alert-card p{font-size:1.02rem;line-height:1.55}
+  .alert-actions{margin-top:1rem}
+  .pill{
+    display:inline-block;
+    font-family:'Lexend',sans-serif;
+    font-size:.85rem;
+    font-weight:500;
+    color:var(--pine);
+    border:1.5px solid var(--pine);
+    border-radius:999px;
+    padding:.35rem .9rem;
+    margin-right:.5rem;
+    margin-top:.25rem;
+  }
+  .caption{
+    font-size:.88rem;
+    color:var(--ink-soft);
+    font-style:italic;
+  }
+
+  /* ---------- Differences ---------- */
+  .diff{margin-top:1.6rem}
+  .diff h3{
+    font-size:1.12rem;
+    font-weight:600;
+    color:var(--pine-deep);
+    margin-bottom:.35rem;
+  }
+  .diff + .diff{margin-top:1.5rem}
+
+  /* ---------- Steps ---------- */
+  .step{display:flex;gap:1.1rem;margin-top:1.7rem}
+  .step-num{
+    flex:0 0 2.4rem;
+    height:2.4rem;
+    border-radius:50%;
+    background:var(--pine);
+    color:var(--paper);
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.05rem;
+  }
+  .step h3{
+    font-family:'Lexend',sans-serif;
+    font-size:1.1rem;
+    font-weight:600;
+    color:var(--pine-deep);
+    margin-bottom:.3rem;
+  }
+  .step p{font-size:1.05rem}
+
+  /* ---------- Pricing / reserve ---------- */
+  .price-line{
+    font-family:'Lexend',sans-serif;
+    font-size:1.9rem;
+    font-weight:700;
+    color:var(--pine-deep);
+    margin:.4rem 0 .2rem;
+  }
+  .price-line span{font-size:1.05rem;font-weight:500;color:var(--ink-soft)}
+  .deposit-box{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:1.5rem 1.5rem 1.6rem;
+    margin-top:1.6rem;
+  }
+  .deposit-box h3{
+    font-family:'Lexend',sans-serif;
+    font-size:1.1rem;
+    color:var(--pine-deep);
+    margin-bottom:.6rem;
+  }
+  .deposit-box ul{
+    list-style:none;
+    margin:.4rem 0 1.2rem;
+  }
+  .deposit-box li{
+    padding-left:1.4rem;
+    position:relative;
+    margin-bottom:.45rem;
+    font-size:1.02rem;
+  }
+  .deposit-box li::before{
+    content:"—";
+    position:absolute;
+    left:0;
+    color:var(--marigold-deep);
+    font-weight:700;
+  }
+
+  /* ---------- Founder note ---------- */
+  .founder{
+    border-left:4px solid var(--marigold);
+    padding-left:1.3rem;
+  }
+  .founder .sig{
+    font-family:'Lexend',sans-serif;
+    font-weight:600;
+    color:var(--pine-deep);
+    margin-top:1rem;
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq details{
+    border-bottom:1px solid var(--line);
+    padding:.9rem 0;
+  }
+  .faq summary{
+    font-family:'Lexend',sans-serif;
+    font-weight:600;
+    font-size:1.05rem;
+    color:var(--pine-deep);
+    cursor:pointer;
+    list-style-position:outside;
+  }
+  .faq details p{margin-top:.6rem;font-size:1.03rem}
+
+  /* ---------- Tally ---------- */
+  .tally-box{margin-top:1.4rem}
+  .tally-box iframe{border:0;width:100%}
+
+  /* ---------- Footer ---------- */
+  footer{
+    background:var(--pine-deep);
+    color:#BBC9BE;
+    padding:2.5rem 0;
+    font-size:.95rem;
+  }
+  footer a{color:var(--paper)}
+  footer p{margin-bottom:.4rem}
+</style>
+</head>
+<body>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow rise">SafeDial · call protection managed by family</span>
+    <h1 class="rise d1">The call already happened.<br><em>The next one goes differently.</em></h1>
+    <p class="lede rise d2">
+      SafeDial screens every call to your parent's phone, stays on the line while they talk,
+      and ends a scam call the moment it shows itself — then sends you the full story.
+      Same number, same phone, nothing new for them to learn.
+    </p>
+    <div class="rise d3">
+      <!-- ============================================================
+           PLACEHOLDER 2 of 3 — STRIPE PAYMENT LINK
+           Replace #STRIPE_PAYMENT_LINK below (both buttons on this page)
+           with your Payment Link URL, e.g. https://buy.stripe.com/xxxx
+      ============================================================ -->
+      <a class="btn" href="#STRIPE_PAYMENT_LINK">Reserve a founding-family spot — $25</a>
+      <a class="btn secondary" href="#updates">Not ready? Get updates</a>
+      <p class="cta-note">Deposit is fully refundable, anytime. Service is $35/month once your family is live.</p>
+    </div>
+  </div>
+</header>
+
+<!-- ================= WHAT YOU RECEIVE ================= -->
+<section>
+  <div class="wrap">
+    <h2>You find out during — not weeks later on a bank statement.</h2>
+    <p>
+      When SafeDial ends a scam call, your parent hears a short, calm message letting them know
+      everything is okay. You get an alert on your phone within minutes, with the transcript
+      and the reason the call was stopped.
+    </p>
+
+    <div class="alert-card" role="img" aria-label="Example of a SafeDial alert">
+      <div class="alert-head">
+        <span>SafeDial · Call ended</span>
+        <time>Tuesday, 1:47 PM</time>
+      </div>
+      <p>
+        An unknown caller told your mom her “grandson” had been arrested and needed bail money
+        sent today — and asked her not to tell anyone. SafeDial ended the call at 1:44 and
+        played her a short reassurance message. She's okay.
+      </p>
+      <div class="alert-actions" aria-hidden="true">
+        <span class="pill">Read full transcript</span>
+        <span class="pill">Call Mom</span>
+      </div>
+    </div>
+    <p class="caption">An example of the alert you'd receive.</p>
+  </div>
+</section>
+
+<!-- ================= WHY NOT JUST A WARNING ================= -->
+<section class="alt">
+  <div class="wrap">
+    <h2>Phones warn. SafeDial acts.</h2>
+    <p>
+      Every phone maker now flags suspicious calls. A warning assumes the person holding the
+      phone can judge it and act on it in the moment — and if that were a safe assumption for
+      your family, you wouldn't be reading this at this hour.
+    </p>
+
+    <div class="diff">
+      <h3>Present during the call, not just at the ring</h3>
+      <p>Scams don't happen when the phone rings. They happen three minutes in, in a warm and
+      convincing human voice. SafeDial listens for the pressure — secrecy, urgency, gift cards,
+      wire transfers — while the call is live.</p>
+    </div>
+
+    <div class="diff">
+      <h3>Nothing for your parent to judge or press</h3>
+      <p>When a call turns into a scam, SafeDial ends it. There's no button for your parent to
+      find and no decision for them to make while someone is working on them.</p>
+    </div>
+
+    <div class="diff">
+      <h3>The family sees everything</h3>
+      <p>Transcripts, voicemail summaries you can listen to, and the reasoning behind every
+      flag — sent to you, wherever you live. You manage it all remotely, without touching
+      their phone again after setup.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW IT WORKS ================= -->
+<section>
+  <div class="wrap">
+    <h2>How it works</h2>
+
+    <div class="step">
+      <div class="step-num" aria-hidden="true">1</div>
+      <div>
+        <h3>A setup call with the founder — about 20 minutes</h3>
+        <p>We check your parent's phone plan first (call forwarding rides their carrier plan,
+        and we confirm it's included before anything changes), install the SafeDial app on
+        their phone, and turn everything on together.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num" aria-hidden="true">2</div>
+      <div>
+        <h3>Nothing changes for your parent</h3>
+        <p>Same phone number. Same phone. The same green button they've answered for years.
+        Real calls from family, doctors, and friends ring through exactly as before.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num" aria-hidden="true">3</div>
+      <div>
+        <h3>Everything changes for you</h3>
+        <p>A dashboard for the trusted-caller list, spoken summaries of voicemails, and an
+        alert the moment something is wrong — instead of a story you piece together afterward.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRICE & RESERVE ================= -->
+<section class="alt" id="reserve">
+  <div class="wrap">
+    <h2>Founding families</h2>
+    <p class="price-line">$35<span> /month, when your service begins</span></p>
+    <p>
+      SafeDial is onboarding its first ten families now — each one set up personally, in the
+      Lower Mainland or remotely anywhere in Canada. Founding families get direct access to
+      the founder and a real say in what gets built.
+    </p>
+
+    <div class="deposit-box">
+      <h3>What the $25 deposit is — and isn't</h3>
+      <ul>
+        <li>A place in line for the first ten spots, fully refundable anytime, no questions.</li>
+        <li>Credited to your first month, or returned to your card — your call.</li>
+        <li>Not a subscription. You will never be charged again without saying yes first.</li>
+      </ul>
+      <a class="btn" href="#STRIPE_PAYMENT_LINK">Reserve your family's spot — $25</a>
+      <p class="caption" style="margin-top:.8rem">Payment handled by Stripe. You'll get a receipt by email.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOUNDER NOTE ================= -->
+<section>
+  <div class="wrap">
+    <div class="founder">
+      <p>
+        I'm Alexandre. I build SafeDial in Port Moody, BC, and I'll set your family up myself.
+        I'm building it in the open, with the first families rather than for them — if you'd
+        rather ask questions before putting anything down, write me and I'll answer personally.
+      </p>
+      <!-- PLACEHOLDER 4 — TALLY CONTACT FORM
+           Create a second Tally form (name, email, message) and replace
+           TALLY_CONTACT_ID with its form ID. Same ID goes in the footer. -->
+      <p class="sig">— Alexandre, founder · <a href="https://tally.so/r/TALLY_CONTACT_ID">Ask me anything</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="alt">
+  <div class="wrap faq">
+    <h2>Straight answers</h2>
+
+    <details>
+      <summary>Does my parent get a new phone number?</summary>
+      <p>No. Their number stays exactly the same, and so does their phone. SafeDial works
+      through call forwarding on their existing line.</p>
+    </details>
+
+    <details>
+      <summary>Does my parent have to learn anything new?</summary>
+      <p>No. Calls ring and answer on the same screen they already know. SafeDial was designed
+      so that the person it protects never has to operate it.</p>
+    </details>
+
+    <details>
+      <summary>What phones does it work with?</summary>
+      <p>iPhone and Android. During setup we also confirm their phone plan supports call
+      forwarding — most current Canadian postpaid plans include it, and we check yours before
+      anything changes.</p>
+    </details>
+
+    <details>
+      <summary>Is someone listening to my parent's calls?</summary>
+      <p>Software screens live calls for scam patterns — not people. Ordinary calls are
+      discarded after they end. Only calls flagged as scams are kept for your review, and you
+      can delete those too.</p>
+    </details>
+
+    <details>
+      <summary>What if a real call gets flagged by mistake?</summary>
+      <p>SafeDial only ends a call on high-confidence signs of a scam. Anything merely odd
+      continues normally while you get a quiet heads-up, and every decision comes with its
+      reasoning so you can correct the trusted-caller list in one tap.</p>
+    </details>
+
+    <details>
+      <summary>Who is behind this?</summary>
+      <p>SafeDial is built by Vector Doc, a company in Port Moody, British Columbia. The founder
+      personally sets up every founding family.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ================= EMAIL UPDATES (TALLY) ================= -->
+<section id="updates">
+  <div class="wrap">
+    <h2>Not ready to reserve?</h2>
+    <p class="soft">
+      Leave your email and you'll hear from me when founding spots open up or when there's
+      something genuinely worth telling you. No drip campaigns.
+    </p>
+    <div class="tally-box">
+      <!-- ============================================================
+           PLACEHOLDER 3 of 3 — TALLY FORM
+           Create a one-field email form at tally.so, then replace
+           TALLY_FORM_ID below with your form's ID (the part after
+           tally.so/r/ in your form link).
+      ============================================================ -->
+      <iframe data-tally-src="https://tally.so/embed/TALLY_FORM_ID?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+              loading="lazy" width="100%" height="150"
+              title="Get updates from SafeDial"></iframe>
+      <script async src="https://tally.so/widgets/embed.js"></script>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <p><strong style="color:var(--paper)">SafeDial</strong> · a product of Vector Doc · Port Moody, BC</p>
+    <p><a href="https://tally.so/r/TALLY_CONTACT_ID">Questions? Write to the founder</a></p>
+    <p style="margin-top:1rem;font-size:.85rem">
+      SafeDial is currently onboarding founding families. Deposits are processed by Stripe and
+      are fully refundable on request.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
